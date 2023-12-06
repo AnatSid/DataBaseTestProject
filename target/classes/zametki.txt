@@ -1,0 +1,75 @@
+private City getCityById(int cityId) {
+        DbWorker dbWorker = new DbWorker();
+        String selectCitySql = "SELECT * FROM city WHERE id = " + cityId;
+        try (Statement cityStatement = dbWorker.getConnection().createStatement();
+             ResultSet cityResultSet = cityStatement.executeQuery(selectCitySql)) {
+            if (cityResultSet.next()) {
+                int cityIdFromDb = cityResultSet.getInt("id");
+                String cityName = cityResultSet.getString("name");
+                return new City(cityIdFromDb, cityName);
+            } else {
+                throw new RuntimeException("City not found for id: " + cityId);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+ private Race getRaceById(int raceId) {
+        DbWorker dbWorker = new DbWorker();
+        String selectSql = "SELECT * FROM race WHERE id = " + raceId;
+        try (Statement statement = dbWorker.getConnection().createStatement();
+             ResultSet resultSet = statement.executeQuery(selectSql)) {
+            if (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String style = resultSet.getString("style");
+                int distance = resultSet.getInt("distance");
+                return new Race(id,style,distance);
+            } else {
+                throw new RuntimeException("Race not found for id: " + raceId);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    private Athlete getAthleteById(int athleteId) {
+        DbWorker dbWorker = new DbWorker();
+        String selectSql = "SELECT * FROM Athletes WHERE id = " + athleteId;
+        try (Statement statement = dbWorker.getConnection().createStatement();
+             ResultSet resultSet = statement.executeQuery(selectSql)) {
+            if (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("first_name");
+                String surname = resultSet.getString("surname");
+                int dateBirth = resultSet.getInt("date_birth");
+                int idCity = resultSet.getInt("city_id");
+                return new Athlete(id,name,surname,dateBirth,idCity);
+            } else {
+                throw new RuntimeException("Athlete not found for id: " + athleteId);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    private Competition getCompetitionById(int competitionId) {
+        DbWorker dbWorker = new DbWorker();
+        String selectSql = "SELECT * FROM Competitions WHERE id = " + competitionId;
+        try (Statement statement = dbWorker.getConnection().createStatement();
+             ResultSet resultSet = statement.executeQuery(selectSql)) {
+            if (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                Date date = resultSet.getDate("date");
+                int city_id = resultSet.getInt("city_id");
+               return new Competition(id,name,date,city_id);
+            } else {
+                throw new RuntimeException("Competition not found for id: " + competitionId);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
