@@ -49,7 +49,6 @@ public class Main {
              ResultSet resultSet = statementCompetition.executeQuery(sqlCompetition);
              ResultSet resultSet2 = statementRaceResults.executeQuery(sqlRaceResults)) {
 
-
             while (resultSet.next()) {
                 long compId = resultSet.getInt("id");
                 String compName = resultSet.getString("name");
@@ -59,32 +58,34 @@ public class Main {
                 competition = new Competition(compId, compName, compDate, new City(cityId, cityName));
             }
 
-            while (resultSet2.next()) {
-                long idRace = resultSet2.getInt("race_id");
-                String style = resultSet2.getString("style");
-                int distance = resultSet2.getInt("distance");
-                Race race = new Race(idRace, style, distance);
+            assert competition != null;
 
-                long idAth = resultSet2.getInt("athlete_id");
+            while (resultSet2.next()) {
+                long raceId = resultSet2.getInt("race_id");
+                String style = resultSet2.getString("style");
+                SwimStyle swimStyle = SwimStyle.valueOf(style.toUpperCase());
+                int distance = resultSet2.getInt("distance");
+                Race race = new Race(raceId, swimStyle, distance);
+
+                long athleteId = resultSet2.getInt("athlete_id");
                 String firstName = resultSet2.getString("first_name");
                 String surname = resultSet2.getString("surname");
                 int date = resultSet2.getInt("date_birth");
                 City city = new City(resultSet2.getInt("city_id"), resultSet2.getString("city_name"));
-                Athlete athlete = new Athlete(idAth, firstName, surname, date, city);
+                Athlete athlete = new Athlete(athleteId, firstName, surname, date, city);
 
                 LocalTime localTime = resultSet2.getTime("result_time").toLocalTime();
                 int points = resultSet2.getInt("points");
 
                 RaceResult raceResult = new RaceResult(race, athlete, localTime, competition, points);
                 raceResults.add(raceResult);
-                assert competition != null;
-                competition.setRaceResults(raceResults);
             }
+
+            competition.setRaceResults(raceResults);
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
 
         System.out.println(competition);
         System.out.println(raceResults);
