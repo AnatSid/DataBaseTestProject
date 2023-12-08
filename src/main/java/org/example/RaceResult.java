@@ -4,11 +4,11 @@ import java.time.LocalTime;
 
 public class RaceResult {
 
-    private Race race;
-    private Athlete athlete;
-    private LocalTime resultTime;
-    private Competition competition;
-    private int points;
+    private final Race race;
+    private final Athlete athlete;
+    private final LocalTime resultTime;
+    private final Competition competition;
+    private final int points;
 
 
     public RaceResult(Race race, Athlete athlete, LocalTime resultTime, Competition competition, int points) {

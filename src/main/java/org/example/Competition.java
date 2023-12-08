@@ -4,10 +4,10 @@ import java.util.Date;
 import java.util.List;
 
 public class Competition {
-    private long id;
-    private String name;
-    private Date date;
-    private City city;
+    private final long id;
+    private final String name;
+    private final Date date;
+    private final City city;
     private List<RaceResult> raceResults;
 
     public Competition(long id, String name, Date date, City city) {
