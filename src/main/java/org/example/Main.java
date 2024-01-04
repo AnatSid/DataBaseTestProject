@@ -1,6 +1,7 @@
 package org.example;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +53,7 @@ public class Main {
             while (resultSet.next()) {
                 long compId = resultSet.getInt("id");
                 String compName = resultSet.getString("name");
-                Date compDate = resultSet.getDate("date");
+                LocalDate compDate = resultSet.getDate("date").toLocalDate();
                 long idCity = resultSet.getInt("id_city");
                 String cityName = resultSet.getString("city_name");
                 competition = new Competition(compId, compName, compDate, new City(idCity, cityName));
