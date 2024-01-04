@@ -1,20 +1,65 @@
 package org.example;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public class Competition {
-    private final long id;
-    private final String name;
-    private final Date date;
-    private final City city;
+    private long id;
+    private String name;
+    private LocalDate date;
+    private City city;
     private List<RaceResult> raceResults;
 
-    public Competition(long id, String name, Date date, City city) {
+    public Competition(long id, String name, LocalDate date, City city) {
         this.id = id;
         this.name = name;
         this.date = date;
         this.city = city;
+    }
+
+    public Competition(String name, LocalDate date, City city) {
+        this.name = name;
+        this.date = date;
+        this.city = city;
+    }
+
+    public Competition() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
+    public List<RaceResult> getRaceResults() {
+        return raceResults;
     }
 
     public void setRaceResults(List<RaceResult> raceResults) {
@@ -24,9 +69,11 @@ public class Competition {
     @Override
     public String toString() {
         return "Competition{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", date=" + date +
                 ", city=" + city +
+                ", raceResults=" + raceResults +
                 '}';
     }
 
