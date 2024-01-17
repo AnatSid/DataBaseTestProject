@@ -1,4 +1,4 @@
-package org.example.competitionService123;
+package org.example.competitionService;
 
 import org.example.City;
 import org.example.Competition;
@@ -56,21 +56,21 @@ public class CompetitionDao {
         Competition competition = null;
 
         try (Connection connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(selectByIdQuery);
-             ResultSet resultSet = statement.executeQuery()) {
+             PreparedStatement statement = connection.prepareStatement(selectByIdQuery)) {
 
             statement.setLong(1, competitionId);
 
-            if (resultSet.next()) {
-                long id = resultSet.getLong("id");
-                String name = resultSet.getString("name");
-                LocalDate localDate = resultSet.getDate("date").toLocalDate();
-                long idCity = resultSet.getLong("id_city");
-                String cityName = resultSet.getString("city_name");
-                City city = new City(idCity, cityName);
-                competition = new Competition(id, name, localDate, city);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    long id = resultSet.getLong("id");
+                    String name = resultSet.getString("name");
+                    LocalDate localDate = resultSet.getDate("date").toLocalDate();
+                    long idCity = resultSet.getLong("id_city");
+                    String cityName = resultSet.getString("city_name");
+                    City city = new City(idCity, cityName);
+                    competition = new Competition(id, name, localDate, city);
+                }
             }
-
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving competition by ID from the database", e);
         }
