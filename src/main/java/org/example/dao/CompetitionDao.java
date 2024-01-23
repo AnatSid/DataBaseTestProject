@@ -1,7 +1,7 @@
-package org.example.competitionService;
+package org.example.dao;
 
-import org.example.City;
-import org.example.Competition;
+import org.example.entity.City;
+import org.example.entity.Competition;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -15,7 +15,7 @@ public class CompetitionDao {
     private static final String DATABASE_PASSWORD = "1313";
 
 
-    public void createCompetitionInDatabase(Competition competition) {
+    public void createCompetition(Competition competition) {
         String insertQuery = "INSERT INTO Competitions (name, date, id_city) VALUES (?, ?, ?)";
 
         try (Connection connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD);
@@ -31,7 +31,7 @@ public class CompetitionDao {
         }
     }
 
-    public void deleteCompetitionInDatabase(Competition competition) {
+    public void deleteCompetition(Competition competition) {
         String deleteQuery = "DELETE FROM Competitions WHERE id = ?";
 
         try (Connection connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD);
@@ -77,7 +77,7 @@ public class CompetitionDao {
         return competition;
     }
 
-    public List<Competition> getAllCompetitionsInDataBase() {
+    public List<Competition> getAllCompetitions() {
         String selectAllQuery =
                 "SELECT Competitions.*, City.name AS city_name " +
                         "FROM Competitions " +

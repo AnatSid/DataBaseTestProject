@@ -1,7 +1,7 @@
-package org.example.athleteService;
+package org.example.dao;
 
-import org.example.Athlete;
-import org.example.City;
+import org.example.entity.Athlete;
+import org.example.entity.City;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ public class AthleteDao {
     private static final String DATABASE_PASSWORD = "1313";
 
 
-    public void createAthletesInDataBase(Athlete athlete) {
+    public void createAthletes(Athlete athlete) {
         String insertQuery = "INSERT INTO Athletes (first_name,surname,date_birth,id_city) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD);
@@ -31,7 +31,7 @@ public class AthleteDao {
         }
     }
 
-    public void deleteAthletesInDataBase(Athlete athlete) {
+    public void deleteAthletes(Athlete athlete) {
         String deleteQuery = "DELETE FROM Athletes WHERE id = ?";
 
         try (Connection connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD);
@@ -75,7 +75,7 @@ public class AthleteDao {
     }
 
 
-    public List<Athlete> getAllAthletesInDataBase() {
+    public List<Athlete> getAllAthletes() {
         List<Athlete> athletes = new ArrayList<>();
         String selectAllQuery =
                 "SELECT Athletes.*, c.name AS city_name " +
