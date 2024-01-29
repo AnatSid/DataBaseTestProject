@@ -2,7 +2,7 @@ package org.example.controller;
 
 
 import org.example.entity.Competition;
-import org.example.mapper.CompetitionJsonMapper;
+import org.example.mapper.JsonMapper;
 import org.example.service.CompetitionService;
 
 import java.util.List;
@@ -10,16 +10,16 @@ import java.util.List;
 
 public class CompetitionController {
     private final CompetitionService competitionService;
-    private final CompetitionJsonMapper competitionJsonMapper;
+    private final JsonMapper jsonMapper;
 
-    public CompetitionController(CompetitionService competitionService, CompetitionJsonMapper competitionJsonMapper) {
+    public CompetitionController(CompetitionService competitionService, JsonMapper jsonMapper) {
         this.competitionService = competitionService;
-        this.competitionJsonMapper = competitionJsonMapper;
+        this.jsonMapper = jsonMapper;
     }
 
     public void addCompetitionFromJson(String jsonRequest) {
         try {
-            Competition competition = competitionJsonMapper.mapCompetitionFromJson(jsonRequest);
+            Competition competition = jsonMapper.mapCompetitionFromJson(jsonRequest);
             competitionService.addCompetition(competition);
         } catch (IllegalArgumentException e) {
             throw new RuntimeException( "Error processing JSON request: ", e);

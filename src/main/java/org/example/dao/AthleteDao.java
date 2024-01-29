@@ -14,7 +14,7 @@ public class AthleteDao {
     private static final String DATABASE_PASSWORD = "1313";
 
 
-    public void createAthletes(Athlete athlete) {
+    public void create(Athlete athlete) {
         String insertQuery = "INSERT INTO Athletes (first_name,surname,date_birth,id_city) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD);
@@ -31,7 +31,7 @@ public class AthleteDao {
         }
     }
 
-    public void deleteAthletes(Athlete athlete) {
+    public void delete(Athlete athlete) {
         String deleteQuery = "DELETE FROM Athletes WHERE id = ?";
 
         try (Connection connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD);
@@ -45,7 +45,7 @@ public class AthleteDao {
         }
     }
 
-    public Athlete getAthleteById(long athleteId) {
+    public Athlete getById(long athleteId) {
         String selectByIdQuery =
                 "SELECT Athletes.*, c.name AS city_name " +
                         "FROM Athletes " +
@@ -75,7 +75,7 @@ public class AthleteDao {
     }
 
 
-    public List<Athlete> getAllAthletes() {
+    public List<Athlete> getAll() {
         List<Athlete> athletes = new ArrayList<>();
         String selectAllQuery =
                 "SELECT Athletes.*, c.name AS city_name " +

@@ -18,25 +18,25 @@ public class CompetitionService {
         if (competition == null) {
             throw new IllegalArgumentException("Competition cannot be null");
         }
-        competitionDao.createCompetition(competition);
+        competitionDao.create(competition);
     }
 
     public void deleteCompetition(Competition competition) {
         if (competition.getId() <= 0) {
             throw new IllegalArgumentException("Invalid competition ID");
         }
-        competitionDao.deleteCompetition(competition);
+        competitionDao.delete(competition);
     }
 
     public Competition getCompetitionById(long competitionId) {
         if (competitionId <= 0) {
             throw new IllegalArgumentException("Invalid competition ID");
         }
-        return competitionDao.getCompetitionById(competitionId);
+        return competitionDao.getById(competitionId);
     }
 
     public List<Competition> getAllCompetitions() {
-        return competitionDao.getAllCompetitions();
+        return competitionDao.getAll();
     }
 
     public List<Competition> getCompetitionsByCity(String cityName) {

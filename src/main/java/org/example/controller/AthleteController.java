@@ -1,15 +1,15 @@
 package org.example.controller;
 
 import org.example.entity.Athlete;
-import org.example.mapper.AthleteJsonMapper;
+import org.example.mapper.JsonMapper;
 import org.example.service.AthleteService;
 
 
 public class AthleteController {
     private final AthleteService athleteService;
-    private final AthleteJsonMapper athleteJsonMapper;
+    private final JsonMapper athleteJsonMapper;
 
-    public AthleteController(AthleteService athleteService, AthleteJsonMapper athleteJsonMapper) {
+    public AthleteController(AthleteService athleteService, JsonMapper athleteJsonMapper) {
         this.athleteService = athleteService;
         this.athleteJsonMapper = athleteJsonMapper;
     }

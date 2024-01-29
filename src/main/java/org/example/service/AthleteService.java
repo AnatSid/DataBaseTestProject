@@ -13,7 +13,7 @@ public class AthleteService {
         if (athlete == null) {
             throw new IllegalArgumentException("Athlete cannot be null");
         }
-        athleteDao.createAthletes(athlete);
+        athleteDao.create(athlete);
     }
 
 }

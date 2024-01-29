@@ -15,7 +15,7 @@ public class CompetitionDao {
     private static final String DATABASE_PASSWORD = "1313";
 
 
-    public void createCompetition(Competition competition) {
+    public void create(Competition competition) {
         String insertQuery = "INSERT INTO Competitions (name, date, id_city) VALUES (?, ?, ?)";
 
         try (Connection connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD);
@@ -31,7 +31,7 @@ public class CompetitionDao {
         }
     }
 
-    public void deleteCompetition(Competition competition) {
+    public void delete(Competition competition) {
         String deleteQuery = "DELETE FROM Competitions WHERE id = ?";
 
         try (Connection connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD);
@@ -45,7 +45,7 @@ public class CompetitionDao {
         }
     }
 
-    public Competition getCompetitionById(long competitionId) {
+    public Competition getById(long competitionId) {
         String selectByIdQuery =
                 "SELECT Competitions.id, Competitions.name, Competitions.date, Competitions.id_city," +
                         " c.name AS city_name " +
@@ -77,7 +77,7 @@ public class CompetitionDao {
         return competition;
     }
 
-    public List<Competition> getAllCompetitions() {
+    public List<Competition> getAll() {
         String selectAllQuery =
                 "SELECT Competitions.*, City.name AS city_name " +
                         "FROM Competitions " +
