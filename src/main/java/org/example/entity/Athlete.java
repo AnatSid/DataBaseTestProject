@@ -1,16 +1,18 @@
 package org.example.entity;
 
+import java.time.LocalDate;
+
 public class Athlete {
     private long id;
     private String firstName;
     private String surName;
-    private int dateBirth;
+    private LocalDate dateBirth;
     private City city;
 
     public Athlete() {
     }
 
-    public Athlete(long id, String firstName, String surName, int dateBirth, City city) {
+    public Athlete(long id, String firstName, String surName, LocalDate dateBirth, City city) {
         this.id = id;
         this.firstName = firstName;
         this.surName = surName;
@@ -18,7 +20,7 @@ public class Athlete {
         this.city = city;
     }
 
-    public Athlete(String firstName, String surName, int dateBirth, City city) {
+    public Athlete(String firstName, String surName, LocalDate dateBirth, City city) {
         this.firstName = firstName;
         this.surName = surName;
         this.dateBirth = dateBirth;
@@ -50,11 +52,11 @@ public class Athlete {
         this.surName = surName;
     }
 
-    public int getDateBirth() {
+    public LocalDate getDateBirth() {
         return dateBirth;
     }
 
-    public void setDateBirth(int dateBirth) {
+    public void setDateBirth(LocalDate dateBirth) {
         this.dateBirth = dateBirth;
     }
 

@@ -16,6 +16,30 @@ public class Race {
     public Race() {
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public SwimStyle getStyle() {
+        return style;
+    }
+
+    public void setStyle(SwimStyle style) {
+        this.style = style;
+    }
+
+    public int getDistance() {
+        return distance;
+    }
+
+    public void setDistance(int distance) {
+        this.distance = distance;
+    }
+
     @Override
     public String toString() {
         return "Race{" +

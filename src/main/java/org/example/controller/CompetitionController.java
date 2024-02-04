@@ -17,13 +17,19 @@ public class CompetitionController {
         this.jsonMapper = jsonMapper;
     }
 
-    public void addCompetitionFromJson(String jsonRequest) {
+    public String addCompetitionFromJson(String jsonRequest) {
         try {
             Competition competition = jsonMapper.mapCompetitionFromJson(jsonRequest);
             competitionService.addCompetition(competition);
+            return jsonMapper.mapCompetitionToJson(competition);
         } catch (IllegalArgumentException e) {
-            throw new RuntimeException( "Error processing JSON request: ", e);
+            throw new RuntimeException("Error processing JSON request or adding competition: " + e.getMessage());
         }
+    }
+
+    public void deleteCompetition(long id) {
+        Competition competitionToDelete = competitionService.getCompetitionById(id);
+        competitionService.deleteCompetition(competitionToDelete);
     }
 
     public Competition getCompetitionById(long id) {
@@ -37,11 +43,5 @@ public class CompetitionController {
     public List<Competition> getCompetitionsByCity(String cityName) {
         return competitionService.getCompetitionsByCity(cityName);
     }
-
-    public void deleteCompetition(long id) {
-        Competition competitionToDelete = competitionService.getCompetitionById(id);
-        competitionService.deleteCompetition(competitionToDelete);
-    }
-
 
 }

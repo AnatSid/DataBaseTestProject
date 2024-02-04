@@ -14,11 +14,11 @@ public class CompetitionService {
         this.competitionDao = competitionDao;
     }
 
-    public void addCompetition(Competition competition) {
+    public Competition addCompetition(Competition competition) {
         if (competition == null) {
             throw new IllegalArgumentException("Competition cannot be null");
         }
-        competitionDao.create(competition);
+        return competitionDao.create(competition);
     }
 
     public void deleteCompetition(Competition competition) {

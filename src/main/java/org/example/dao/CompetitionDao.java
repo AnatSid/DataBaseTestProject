@@ -15,20 +15,29 @@ public class CompetitionDao {
     private static final String DATABASE_PASSWORD = "1313";
 
 
-    public void create(Competition competition) {
+    public Competition create(Competition competition) {
         String insertQuery = "INSERT INTO Competitions (name, date, id_city) VALUES (?, ?, ?)";
 
         try (Connection connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(insertQuery)) {
+             PreparedStatement statement = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, competition.getName());
             statement.setDate(2, Date.valueOf(competition.getDate()));
             statement.setLong(3, competition.getCity().getId());
             statement.executeUpdate();
 
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    long id = generatedKeys.getLong(1);
+                    competition.setId(id);
+                } else {
+                    throw new SQLException("Creating competition failed, no ID obtained.");
+                }
+            }
         } catch (SQLException e) {
             throw new RuntimeException("Error adding competition to database", e);
         }
+        return competition;
     }
 
     public void delete(Competition competition) {
@@ -46,12 +55,11 @@ public class CompetitionDao {
     }
 
     public Competition getById(long competitionId) {
-        String selectByIdQuery =
-                "SELECT Competitions.id, Competitions.name, Competitions.date, Competitions.id_city," +
-                        " c.name AS city_name " +
-                        "FROM Competitions " +
-                        "JOIN City c ON Competitions.id_city = c.id " +
-                        "WHERE Competitions.id = ?";
+        String selectByIdQuery = "SELECT Competitions.id, Competitions.name, Competitions.date, Competitions.id_city,"
+                + " c.name AS city_name "
+                + "FROM Competitions "
+                + "JOIN City c ON Competitions.id_city = c.id "
+                + "WHERE Competitions.id = ?";
 
         Competition competition = null;
 
@@ -78,10 +86,10 @@ public class CompetitionDao {
     }
 
     public List<Competition> getAll() {
-        String selectAllQuery =
-                "SELECT Competitions.*, City.name AS city_name " +
-                        "FROM Competitions " +
-                        "JOIN City ON Competitions.id_city = City.id";
+        String selectAllQuery = "SELECT Competitions.*, City.name AS city_name "
+                + "FROM Competitions "
+                + "JOIN City ON Competitions.id_city = City.id";
+
         List<Competition> competitions = new ArrayList<>();
 
         try (Connection connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD);
@@ -106,11 +114,11 @@ public class CompetitionDao {
     }
 
     public List<Competition> getCompetitionsByCity(String cityName) {
-        String selectByCityQuery =
-                "SELECT Competitions.*, City.name AS city_name " +
-                        "FROM Competitions " +
-                        "JOIN City ON Competitions.id_city = City.id " +
-                        "WHERE City.name = ?";
+        String selectByCityQuery = "SELECT Competitions.*, City.name AS city_name "
+                + "FROM Competitions "
+                + "JOIN City ON Competitions.id_city = City.id "
+                + "WHERE City.name = ?";
+
         List<Competition> competitions = new ArrayList<>();
 
         try (Connection connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD);
