@@ -2,9 +2,11 @@ package org.example.service;
 
 import org.example.entity.Athlete;
 import org.example.dao.AthleteDao;
+import org.example.exception.EntityNotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public class AthleteService {
     private final AthleteDao athleteDao;
@@ -31,7 +33,14 @@ public class AthleteService {
         if (id <= 0) {
             throw new IllegalArgumentException("Id should be positive values");
         }
-        return athleteDao.getById(id);
+
+        Optional<Athlete> optionalAthlete = athleteDao.findById(id);
+
+        if (optionalAthlete.isPresent()) {
+            return optionalAthlete.get();
+        } else {
+            throw new EntityNotFoundException("Athlete not found with ID: " + id);
+        }
     }
 
     public List<Athlete> getAllAthletes() {

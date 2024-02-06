@@ -7,6 +7,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class AthleteDao {
 
@@ -57,13 +58,11 @@ public class AthleteDao {
         }
     }
 
-    public Athlete getById(long athleteId) {
+    public Optional<Athlete> findById(long athleteId) {
         String selectByIdQuery = "SELECT Athletes.*, c.name AS city_name "
                 + "FROM Athletes "
                 + "JOIN City c ON Athletes.id_city = c.id "
                 + "WHERE Athletes.id = ?";
-
-        Athlete athlete = null;
 
         try (Connection connection = DriverManager.getConnection(DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD);
              PreparedStatement statement = connection.prepareStatement(selectByIdQuery)) {
@@ -77,13 +76,14 @@ public class AthleteDao {
                     LocalDate dateBirth = resultSet.getDate("date_birth").toLocalDate();
                     long idCity = resultSet.getLong("id_city");
                     String cityName = resultSet.getString("city_name");
-                    athlete = new Athlete(athleteId, firstName, surname, dateBirth, new City(idCity, cityName));
+                    Athlete athlete = new Athlete(athleteId, firstName, surname, dateBirth, new City(idCity, cityName));
+                    return Optional.of(athlete);
                 }
             }
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving athlete by ID from the database", e);
         }
-        return athlete;
+        return Optional.empty();
     }
 
     public List<Athlete> getAll() {
